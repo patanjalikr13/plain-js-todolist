@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>
+    Assignment - Baby Destination
+</title>
+    <script>
+        toDoList = [];
+        class toDo{
+            constructor(text){
+                this.text = text;
+                this.done = false;
+            }
+        }
+        addToList = () => {
+
+            input = document.getElementById("toDoTask").value;
+            if(input.length>0){
+
+            toDoList.push(new toDo(input));
+            renderListContainer(toDoList);
+                document.getElementById("toDoTask").value = "";
+
+            }
+        }
+        function remove(index) {
+            toDoList.splice(index, 1);
+            renderListContainer(toDoList);
+        }
+        function done(index) {
+            toDoList[index].done = true;
+            renderListContainer(toDoList);
+
+        }
+        function  renderListContainer(toDoList){
+            html = "";
+
+            toDoList.map(
+                (v, i)=>{
+                    if(v.done == false)
+                    html+='<li onclick="done('+i+')" style="margin: 5px; width: 500px; float: left; padding: 20px; border: solid 1px; border-radius: 10px;">'
+                        +'<span style="float: left">'+v.text+'</span>'
+                    +'<span onclick="remove('+i+')" style="cursor: pointer; float:right;">X</span>'
+                       + '</li>';
+                    else
+                        html+='<li onclick="done('+i+')" style="background-color: lightseagreen; margin: 5px; width: 500px; float: left; padding: 20px; border: solid 1px; border-radius: 10px;">'
+                            +'<span style="color: white; float: left">'+v.text+'</span>'
+                            +'<span style="color: white; cursor: pointer; float:right;">Completed</span>'
+                            + '</li>';
+
+                }
+            )
+            document.getElementById("toDoListContainer").innerHTML = html;
+        }
+    </script>
+</head>
+<body>
+    <div style="text-align: center;">
+        <input type="text" id="toDoTask" style="font-size: large; width: 500px; height: 50px; padding: 10px;">
+        <button onclick="addToList()" id="addBtn">ADD</button>
+
+        <ol id="toDoListContainer"style="width: 200px; list-style: none;">
+
+        </ol>
+
+    </div>
+<script>
+    var input = document.getElementById("toDoTask");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            document.getElementById("addBtn").click();
+        }
+    });
+</script>
+</body>
+</html>
